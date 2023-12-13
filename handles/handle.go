@@ -9,10 +9,7 @@ import (
 	"os"
 )
 
-type PageData struct {
-    Vari string
-    Message string
-}
+
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/home.html"))
@@ -24,8 +21,21 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func AboutHandler(w http.ResponseWriter, r *http.Request) {
+	var sessionToken string
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		sessionToken="não logado"
+	} else {
+		sessionToken = cookie.Value
+	}
+
+	data := PageData{
+        Usuario:   sessionToken,
+        Message: "Olá, mundo!",
+    }
+
 	tmpl := template.Must(template.ParseFiles("templates/about.html"))
-	tmpl.Execute(w, nil)
+	tmpl.Execute(w, data)
 }
 
 func LoginSucessoHandle(w http.ResponseWriter, r *http.Request) {
@@ -58,6 +68,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request){
 		username := valores.Get("username")
     	password := valores.Get("password")
         if username=="marcio" && password=="" {
+
+			http.SetCookie(w, &http.Cookie{
+				Name: "session_token",
+				Value: "Marcio",
+			})
+
 			templ:= template.Must(template.ParseFiles("templates/loginSucesso.html"))
 			templ.Execute(w,nil)
 		} else {
