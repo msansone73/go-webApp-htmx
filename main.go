@@ -10,8 +10,9 @@ func main() {
 	mux := http.NewServeMux()
 	rotes.SetRotes(mux)
 
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	fileServer := http.FileServer(http.Dir("./static"))
+    http.Handle("/static/", http.StripPrefix("/static/", fileServer))
+
 
 	http.ListenAndServe(":8080", mux)
 }
