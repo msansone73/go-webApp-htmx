@@ -2,14 +2,10 @@ package handles
 
 import (
 	"html/template"
-	"io"
 	"log"
 	"net/http"
-	"net/url"
-	"os"
+	"github.com/gin-gonic/gin"
 )
-
-
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/home.html"))
@@ -20,70 +16,49 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, data)
 }
 
-func AboutHandler(w http.ResponseWriter, r *http.Request) {
+func HomeHandlerGin(c *gin.Context) {
+	log.Println("HomeHandlerGin...")
+	c.HTML(http.StatusOK, "home.html", gin.H{
+		"Vari":   "Minha Página com Gin",
+        "Message": "Olá, mundo!",
+	})
+}
+
+func AboutHandler(c *gin.Context) {
 	var sessionToken string
-	cookie, err := r.Cookie("session_token")
+	
+	cookie, err := c.Cookie("Value")
 	if err != nil {
 		sessionToken="não logado"
 	} else {
-		sessionToken = cookie.Value
+		sessionToken = cookie
 	}
-
-	data := PageData{
-        Usuario:   sessionToken,
-        Message: "Olá, mundo!",
-    }
-
-	tmpl := template.Must(template.ParseFiles("templates/about.html"))
-	tmpl.Execute(w, data)
+	c.HTML(http.StatusOK, "about.html", gin.H{
+        "Usuario":   sessionToken,
+        "Message": "Olá, mundo!",
+	})
 }
 
-func LoginSucessoHandle(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/loginSucesso.html"))
-	tmpl.Execute(w, nil)
+func LoginSucessoHandle(c *gin.Context) {
+	logedUser, _:= c.Cookie("Value")
+	c.HTML(http.StatusOK, "loginSucesso.html", gin.H{
+		"logedUser":logedUser,
+	})
 }
 
-func LoginHandler(w http.ResponseWriter, r *http.Request){
-	logger := log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile)
+func LoginHandlerGet(c *gin.Context){
+	c.HTML(http.StatusOK, "login.html", nil)
+}
 
-	switch r.Method {
-    case "GET":
-        // Manipulação para requisições GET
-		templ:= template.Must(template.ParseFiles("templates/login.html"))
-		templ.Execute(w,nil)
-    case "POST":
-        // Manipulação para requisições POST
-        // Ler o corpo da requisição
-        body, err := io.ReadAll(r.Body)
-		if err != nil {
-            http.Error(w, "Erro ao ler o corpo da requisição", http.StatusInternalServerError)
-            return
-        }
-		logger.Println(string(body))
-		valores, err := url.ParseQuery(string(body))
-		if err != nil {
-            http.Error(w, "Erro ao parsear o corpo da requisição", http.StatusInternalServerError)
-            return
-        }
-		username := valores.Get("username")
-    	password := valores.Get("password")
-        if username=="marcio" && password=="" {
-
-			http.SetCookie(w, &http.Cookie{
-				Name: "session_token",
-				Value: "Marcio",
-			})
-
-			templ:= template.Must(template.ParseFiles("templates/loginSucesso.html"))
-			templ.Execute(w,nil)
-		} else {
-			templ:= template.Must(template.ParseFiles("templates/login.html"))
-			templ.Execute(w,nil)
-		}
-    default:
-        // Método não suportado
-        http.Error(w, "Método não suportado", http.StatusMethodNotAllowed)
-    }
-
-
+func LoginHandlerPost(c *gin.Context){
+	username := c.PostForm("username")
+    password := c.PostForm("password")
+	if password!="" {
+		c.SetCookie("Value",username,0,"","",true,true)
+		c.HTML(http.StatusOK,"loginSucesso.html",gin.H{
+			"logedUser":username,
+		})
+	} else {
+		c.HTML(http.StatusOK,"login.html",nil)
+	}
 }

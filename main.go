@@ -2,19 +2,20 @@ package main
 
 import (
 	"main/rotes"
-	"net/http"
+    "github.com/gin-gonic/gin"
 )
 
 func main() {
 
-	mux := http.NewServeMux()
-	rotes.SetRotes(mux)
+	r := gin.Default()
 
-	fileServer := http.FileServer(http.Dir("./static"))
-    http.Handle("/static/", http.StripPrefix("/static/", fileServer))
+	rotes.SetRoutesGin(r)
+	r.LoadHTMLGlob("templates/*")
+	r.Static("/static", "./assets")
+	
+	r.Run(":8080")
 
 
-	http.ListenAndServe(":8080", mux)
 }
 
 
