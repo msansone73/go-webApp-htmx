@@ -2,13 +2,18 @@ package rotes
 
 import (
 	"main/handles"
-	"net/http"
+	"github.com/gin-gonic/gin"
 )
 
 
-func SetRotes(htt *http.ServeMux ){
-	htt.HandleFunc("/", handles.HomeHandler)
-	htt.HandleFunc("/about", handles.AboutHandler)
-	htt.HandleFunc("/login", handles.LoginHandler)
-	htt.HandleFunc("/loginSucesso", handles.LoginSucessoHandle)
+
+
+func SetRoutesGin(r *gin.Engine ){
+
+	r.GET("/", handles.HomeHandlerGin)
+	r.GET("/about", handles.AboutHandler)
+	r.GET("/loginSucesso", handles.LoginSucessoHandle)
+	r.GET("/login", handles.LoginHandlerGet)
+	r.POST("/login", handles.LoginHandlerPost)
+
 }
