@@ -13,3 +13,4 @@ func GetStocks( c *gin.Context) {
 	c.HTML(http.StatusOK,"stockList.html", stocks)
 
 }
+

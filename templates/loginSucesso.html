@@ -1,2 +1,40 @@
+<div id="menu" hx-swap-oob="true">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="static/logo.png" alt="Imagem Descrição" width="30px" height="30px">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item"  hx-get="/welcome" hx-target="#content">
+                <a class="nav-link active" aria-current="page">Home</a>
+              </li>
+              <li class="nav-item"  hx-get="/about" hx-target="#content">
+                <a class="nav-link active" aria-current="page">About</a>
+              </li>
+              <li class="nav-item"  hx-get="/stocks" hx-target="#content">
+                <a class="nav-link active" aria-current="page">Stock</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pricing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">{{ .logedUser }}</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            {{ .logedUser }}
+            <button hx-get="/logout" hx-target="#content">Logout</button>
+          </div>
+        </div>
+      </nav>  
+</div>
 <div id="logado" hx-swap-oob="true">{{ .logedUser }}</div>
 <div id="content" hx-swap-oob="true">Logado com sucesso</div>
