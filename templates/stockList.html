@@ -1,0 +1,22 @@
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Codigo</th>
+        <th scope="col">Nome</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {{range .}}
+        <tr>
+            <th scope="row">{{.ID}}</th>
+            <td>{{.Code}}</td>
+            <td>{{.Name}}</td>
+            <td></td>
+        </tr>
+        {{end}}
+    </tbody>
+  </table>
+
+

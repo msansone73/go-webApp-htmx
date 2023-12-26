@@ -15,5 +15,6 @@ func SetRoutesGin(r *gin.Engine ){
 	r.GET("/loginSucesso", handles.LoginSucessoHandle)
 	r.GET("/login", handles.LoginHandlerGet)
 	r.POST("/login", handles.LoginHandlerPost)
+	r.GET("/stocks", handles.GetStocks)
 
 }
