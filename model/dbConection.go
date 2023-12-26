@@ -12,7 +12,7 @@ func getConectionString() string {
 	return os.Getenv("goSansoneDB")
 }
 
-func getConnection() *sql.DB {
+func GetConnection() *sql.DB {
 	db, err := sql.Open("postgres", getConectionString())
 	if err!=nil {
 		log.Fatal(err.Error())
@@ -21,12 +21,7 @@ func getConnection() *sql.DB {
 	return db
 }
 
-type User struct {
-	ID        int    `json:"id"`
-	Name      string `json:"name"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-}
+
 
 type Stock struct{
 	ID        int    `json:"id"`
@@ -36,23 +31,9 @@ type Stock struct{
 	
 }
 
-func GetUserById(id int) User {
-	db:= getConnection()
-	defer db.Close()
-
-	var user User
-	err := db.QueryRow("SELECT id, name, email, password FROM users WHERE id = $1", id).
-		Scan(&user.ID, &user.Name, &user.Email, &user.Password)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return user
-
-}
 
 func GetStocksList() []Stock{
-	db:= getConnection()
+	db:= GetConnection()
 	defer db.Close()
 
 	var stocks []Stock

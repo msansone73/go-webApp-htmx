@@ -1,7 +1,7 @@
 package handles
 
 import (
-    "main/model"
+    "main/model/user"
 )
 
 
@@ -9,5 +9,5 @@ type PageData struct {
     Vari string
 	Usuario string
     Message string
-    User model.User
+    User user.User
 }

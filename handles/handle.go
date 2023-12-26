@@ -3,6 +3,7 @@ package handles
 import (
 	"log"
 	"main/model"
+	"main/model/user"
 	"net/http"
 	"os"
 
@@ -23,6 +24,7 @@ func HomeHandlerGin(c *gin.Context) {
 
 func AboutHandler(c *gin.Context) {
 	var sessionToken string
+	var user = new(user.User)
 	
 	cookie, err := c.Cookie("Value")
 	if err != nil {
@@ -31,7 +33,10 @@ func AboutHandler(c *gin.Context) {
 		sessionToken = cookie
 	}
 
-	user := model.GetUserById(1)
+	err = user.GetUserById(10)
+	if err!=nil {
+		log.Println("AboutHandler() - "+err.Error())
+	}
 
 	c.HTML(http.StatusOK, "about.html", gin.H{
         "Usuario":   sessionToken,
