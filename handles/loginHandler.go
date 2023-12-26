@@ -1,6 +1,7 @@
 package handles
 
 import (
+	"main/model/user"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -21,12 +22,14 @@ func LoginHandlerGet(c *gin.Context){
 func LoginHandlerPost(c *gin.Context){
 	username := c.PostForm("username")
     password := c.PostForm("password")
-	if password!="" {
+	var user user.User
+	err := user.GetUserByEmailPass(username, password)
+	if err!=nil{
+		c.HTML(http.StatusOK,"login.html",nil)
+	} else {
 		c.SetCookie("Value",username,0,"","",true,true)
 		c.HTML(http.StatusOK,"loginSucesso.html",gin.H{
 			"logedUser":username,
 		})
-	} else {
-		c.HTML(http.StatusOK,"login.html",nil)
 	}
 }
