@@ -13,7 +13,7 @@ func main() {
 	r.LoadHTMLGlob("templates/*")
 	r.Static("/static", "./assets")
 	
-	r.Run(":8080")
+	r.Run(":80")
 
 
 }
