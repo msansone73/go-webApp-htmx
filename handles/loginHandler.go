@@ -1,9 +1,11 @@
 package handles
 
 import (
+	"log"
 	"main/model/user"
 	"net/http"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,6 +22,7 @@ func LoginHandlerGet(c *gin.Context){
 }
 
 func LoginHandlerPost(c *gin.Context){
+	session:= sessions.Default(c)
 	username := c.PostForm("username")
     password := c.PostForm("password")
 	var user user.User
@@ -27,7 +30,11 @@ func LoginHandlerPost(c *gin.Context){
 	if err!=nil{
 		c.HTML(http.StatusOK,"login.html",nil)
 	} else {
-		c.SetCookie("Value",username,0,"","",true,true)
+		session.Set("user",user.Email)
+		err= session.Save()
+		if err!= nil{
+			log.Println("LoginHandlerPost - impossivel gravar sessão - "+err.Error())
+		}
 		c.HTML(http.StatusOK,"loginSucesso.html",gin.H{
 			"logedUser":username,
 		})

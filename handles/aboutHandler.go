@@ -1,33 +1,28 @@
 package handles
 
 import (
-	"log"
 	"main/model/user"
 	"net/http"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
 
 func AboutHandler(c *gin.Context) {
-	var sessionToken string
+	var session = sessions.Default(c)
 	var user = new(user.User)
 	
-	cookie, err := c.Cookie("Value")
-	if err != nil {
-		sessionToken="não logado"
+	email := session.Get("user")
+	if (email==nil){
+		user.Email="-- not logged --"
 	} else {
-		sessionToken = cookie
-	}
-
-	err = user.GetUserById(10)
-	if err!=nil {
-		log.Println("AboutHandler() - "+err.Error())
+		user.Email=email.(string)
 	}
 
 	c.HTML(http.StatusOK, "about.html", gin.H{
-        "Usuario":   sessionToken,
+        "Usuario":   user.Email,
         "Message": "Olá, mundo!",
-		"user":user,
+		"user": user.Email,
 	})
 }
