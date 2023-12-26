@@ -17,6 +17,16 @@ func LoginSucessoHandle(c *gin.Context) {
 	})
 }
 
+func LogoutHandler(c * gin.Context){
+	session:= sessions.Default(c)
+	session.Clear()
+	session.Save()
+	log.Println("LogoutHandler - Session cleaned!")
+	c.HTML(http.StatusOK, "forbidden.html", gin.H{
+		"mensagem":"logout efetuado com sucesso!",
+	})
+}
+
 func LoginHandlerGet(c *gin.Context){
 	c.HTML(http.StatusOK, "login.html", nil)
 }
