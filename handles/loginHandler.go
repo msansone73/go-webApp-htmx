@@ -2,7 +2,7 @@ package handles
 
 import (
 	"log"
-	"main/model/user"
+	"main/model"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
@@ -35,7 +35,7 @@ func LoginHandlerPost(c *gin.Context){
 	session:= sessions.Default(c)
 	username := c.PostForm("username")
     password := c.PostForm("password")
-	var user user.User
+	var user model.User
 	err := user.GetUserByEmailPass(username, password)
 	if err!=nil{
 		c.HTML(http.StatusOK,"login.html",nil)

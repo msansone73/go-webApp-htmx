@@ -17,8 +17,8 @@ func main() {
 	store := cookie.NewStore([]byte("secret"))
 
     // Configurar o Gin para usar o logger padrão
-    gin.SetMode(gin.ReleaseMode)
-    gin.DefaultWriter = file
+    //gin.SetMode(gin.ReleaseMode)
+    //gin.DefaultWriter = file
 
 
 	r := gin.Default()

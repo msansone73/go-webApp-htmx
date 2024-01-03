@@ -1,8 +1,7 @@
-package user
+package model
 
 import (
 	"log"
-	"main/model"
 )
 
 type User struct {
@@ -14,7 +13,7 @@ type User struct {
 
 func (user *User) GetUserById(id int) error {
 	
-	db:= model.GetConnection()
+	db:= GetConnection()
 	defer db.Close()
 
 	err := db.QueryRow("SELECT id, name, email,  FROM users WHERE id = $1", id).
@@ -28,7 +27,7 @@ func (user *User) GetUserById(id int) error {
 
 func (user *User) GetUserByEmail(email string) error {
 	
-	db:= model.GetConnection()
+	db:= GetConnection()
 	defer db.Close()
 
 	err := db.QueryRow("SELECT id, name, email FROM users WHERE email = $1", email).
@@ -42,7 +41,7 @@ func (user *User) GetUserByEmail(email string) error {
 
 func (user *User) GetUserByEmailPass(email string, password string) error {
 	
-	db:= model.GetConnection()
+	db:= GetConnection()
 	defer db.Close()
 
 	err := db.QueryRow("SELECT id, name, email FROM users WHERE email = $1 and password= $2", email, password).

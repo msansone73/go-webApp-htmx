@@ -1,7 +1,7 @@
 package handles
 
 import (
-	"main/model/user"
+	"main/model"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
@@ -11,7 +11,7 @@ import (
 
 func AboutHandler(c *gin.Context) {
 	var session = sessions.Default(c)
-	var user = new(user.User)
+	var user = new(model.User)
 	
 	email := session.Get("user")
 	if (email==nil){
