@@ -9,7 +9,8 @@ import (
 
 
 func GetStocks( c *gin.Context) {
-	stocks := model.GetStocksList()
+	stock := new(model.Stock)
+	stocks := stock.GetStocksList()
 	c.HTML(http.StatusOK,"stockList.html", stocks)
 
 }

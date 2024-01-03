@@ -19,5 +19,7 @@ func SetRoutesGin(r *gin.Engine ){
 	r.GET("/stocks", handles.MustLoggged, handles.GetStocks)
 	r.GET("/forbidden", handles.GoForbidden)
 	r.GET("/logout", handles.LogoutHandler)
+	r.GET("/transactions", handles.TransactionListHandler)
+	r.GET("/carteira", handles.CarteiraHandler)
 
 }
