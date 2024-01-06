@@ -5,9 +5,8 @@ import (
 )
 
 type Stock struct{
-	ID        int    `json:"id"`
-	Name      string `json:"name"`
 	Code      string `json:"code"`
+	Name      string `json:"name"`
 	Tipo      string `json:"tipo"`
 }
 
@@ -18,23 +17,21 @@ func (stock *Stock) GetStocksList() []Stock{
 
 	var stocks []Stock
 
-	rows, err := db.Query("SELECT id, name, code, type FROM stocks")
+	rows, err := db.Query("SELECT name, code, type FROM stocks")
 	if err != nil {
 		log.Fatal(err)
 	}
     defer rows.Close()
 
     for rows.Next() {
-        var id int
         var name string
         var code string
         var tipo string
-        err = rows.Scan(&id, &name, &code, &tipo)
+        err = rows.Scan(&name, &code, &tipo)
         if err != nil {
             log.Fatal(err)
         }
 		stocks= append(stocks, Stock{
-			ID: id,
 			Name: name,
 			Code: code,
 			Tipo: tipo})

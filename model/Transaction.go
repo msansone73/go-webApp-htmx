@@ -20,7 +20,7 @@ func (t * Transaction) GetTransactionsByUser(user User) ([]Transaction, error) {
 	defer db.Close()
 
 
-	rows, err:= db.Query("select id, stock_id, type, value, quantity, data_at from transactions where user_id = $1", user.ID) 
+	rows, err:= db.Query("select id, stock_code, type, value, quantity, date from transactions where user_id = $1", user.ID) 
 	if err!= nil {
 		log.Println("GetTransactionsByUser - erro: "+err.Error())
 		return nil, err
@@ -29,12 +29,12 @@ func (t * Transaction) GetTransactionsByUser(user User) ([]Transaction, error) {
 	var transactions = make([]Transaction,0)
 
 	for rows.Next() {
-		var id, quantity, stock_id int
-		var tipo string
+		var id, quantity int
+		var tipo, stock_code string
 		var value float64
 		var data time.Time
 
-		err = rows.Scan(&id, &stock_id, &tipo, &value, &quantity, &data)
+		err = rows.Scan(&id, &stock_code, &tipo, &value, &quantity, &data)
 		if err!= nil {
 			log.Println("GetTransactionsByUser - erro: "+err.Error())
 			return nil, err
@@ -44,7 +44,7 @@ func (t * Transaction) GetTransactionsByUser(user User) ([]Transaction, error) {
 			ID: id,
 			User: user,
 			Stock: Stock{
-				ID: stock_id,
+				Code: stock_code,
 				},
 			Tipo: tipo,
 			Value: value,
