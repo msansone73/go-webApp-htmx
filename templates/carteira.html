@@ -1,1 +1,17 @@
 <p>Carteira</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Valor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $key, $acao := . }}
+        <tr>
+            <td>{{ $key }}</td>
+            <td>{{ $acao | formatCurrency  }}</td>
+        </tr>
+        {{ end }}
+    </tbody>

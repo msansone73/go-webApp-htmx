@@ -14,9 +14,9 @@
         <tr>
             <th scope="row">{{.ID}}</th>
             <td>{{.Stock.Code}}</td>
-            <td>{{.Value}}</td>
+            <td>{{.Value| formatCurrency}}</td>
             <td>{{.Quantity}}</td>
-            <td>{{.Date}}</td>
+            <td>{{.Date | formatDate}}</td>
             <td></td>
         </tr>
         {{end}}
