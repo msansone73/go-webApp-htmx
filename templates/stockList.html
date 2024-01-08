@@ -1,9 +1,12 @@
+<button class="btn btn-primary" hx-get="/stock/form" hx-target="#content"> New</button>
+
 <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Codigo</th>
         <th scope="col">Nome</th>
+        <th scope="col"></th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -13,6 +16,7 @@
             <th scope="row"></th>
             <td>{{.Code}}</td>
             <td>{{.Name}}</td>
+            <td><button class="btn btn-danger" hx-delete="/stock/{{.Code}}" hx-target="#content"> Apagar</button></td>
             <td></td>
         </tr>
         {{end}}
