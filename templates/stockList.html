@@ -1,4 +1,4 @@
-<button class="btn btn-primary" hx-get="/stock/form" hx-target="#content"> New</button>
+<button class="btn btn-success" hx-get="/stock/form" hx-target="#content"> New</button>
 
 <table class="table table-striped">
     <thead>
@@ -17,8 +17,8 @@
             <th scope="row"></th>
             <td>{{.Code}}</td>
             <td>{{.Name}}</td>
-            <td><button class="btn btn-primary" hx-put="/stock/{{.Code}}" hx-target="#content"> Editar</button></td>
-            <td><button class="btn btn-danger" hx-delete="/stock/{{.Code}}" hx-target="#content"> Apagar</button></td>
+            <td><button class="btn btn-primary btn-sm" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" hx-put="/stock/{{.Code}}" hx-target="#content"> Editar</button></td>
+            <td><button class="btn btn-danger btn-sm" hx-delete="/stock/{{.Code}}" hx-target="#content" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Apagar</button></td>
             <td></td>
         </tr>
         {{end}}
