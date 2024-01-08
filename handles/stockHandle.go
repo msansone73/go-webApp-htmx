@@ -44,3 +44,14 @@ func DeleteStock( c *gin.Context) {
 	}
 	GetStocks(c)
 }
+
+func PutStock( c *gin.Context) {
+	code := c.Param("code")
+	stock := new(model.Stock)
+	stock.Code = code
+	err := stock.GetStockByCode()
+	if err!=nil {
+		log.Println("Erro ao recuperar stock", err.Error())
+	}
+	c.HTML(http.StatusOK,"stockForm.html", stock)
+}

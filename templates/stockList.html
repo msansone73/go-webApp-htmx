@@ -8,6 +8,7 @@
         <th scope="col">Nome</th>
         <th scope="col"></th>
         <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
             <th scope="row"></th>
             <td>{{.Code}}</td>
             <td>{{.Name}}</td>
+            <td><button class="btn btn-primary" hx-put="/stock/{{.Code}}" hx-target="#content"> Editar</button></td>
             <td><button class="btn btn-danger" hx-delete="/stock/{{.Code}}" hx-target="#content"> Apagar</button></td>
             <td></td>
         </tr>

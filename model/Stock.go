@@ -84,3 +84,15 @@ func (stock *Stock) DeleteStock() error {
 	return nil
 }
 
+func (stock *Stock) GetStockByCode() error {
+	db := GetConnection()
+	defer db.Close()
+
+	err := db.QueryRow("SELECT name, code, type FROM stocks WHERE code = $1", stock.Code).Scan(&stock.Name, &stock.Code, &stock.Tipo)
+	if err != nil {
+		log.Printf("Error getting stock: %s", err)
+		return err
+	}
+
+	return nil
+}
