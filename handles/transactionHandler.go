@@ -4,11 +4,16 @@ import (
 	"log"
 	"main/model"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
+type TransactionFormReq struct {
+	Stocks []model.Stock `json:"stocks"`
+	Transaction model.Transaction `json:"transaction"`
+}
 
 func TransactionListHandler( c *gin.Context) {
 	log.Println("iniciando TransactionListHandler() ...")
@@ -62,9 +67,20 @@ func CarteiraHandler (c *gin.Context){
 			transactionItens[t.Stock.Code] += t.Value*float64(t.Quantity)
 		}	
 	}
-
-
 	c.HTML(http.StatusOK,"carteira.html", transactionItens)
 }
 
+func TransactionFormHandler(c *gin.Context) {
+	log.Println("iniciando TransactionFormHandler() ...")
+	id, _ := strconv.Atoi(c.Param("id"))
 
+	tranReq := new(TransactionFormReq)
+	if id!= 0 {
+		tranReq.Transaction.GetTransactionById(id)
+	}
+	stock := new(model.Stock)
+	stocks := stock.GetStocksList()
+	tranReq.Stocks = stocks
+
+	c.HTML(http.StatusOK, "transactionForm.html", tranReq)
+}

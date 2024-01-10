@@ -54,3 +54,29 @@ func (t * Transaction) GetTransactionsByUser(user User) ([]Transaction, error) {
 	}
 	return transactions, nil
 }
+
+func (t *Transaction) GetTransactionById(id int) error {
+	db:= GetConnection()
+	defer db.Close()
+
+	err:= db.QueryRow("select id, stock_code, type, value, quantity, date from transactions where id = $1", id).Scan(&t.ID, &t.Stock.Code, &t.Tipo, &t.Value, &t.Quantity, &t.Date)
+	if err!= nil {
+		log.Println("GetTransactionById - erro: "+err.Error())
+		return err
+	}
+
+	return nil
+}
+
+func (t *Transaction) SaveTransaction() error {
+	db:= GetConnection()
+	defer db.Close()
+
+	_, err:= db.Exec("insert into transactions (user_id, stock_code, type, value, quantity, date) values ($1, $2, $3, $4, $5, $6)", t.User.ID, t.Stock.Code, t.Tipo, t.Value, t.Quantity, t.Date)
+	if err!= nil {
+		log.Println("SaveTransaction - erro: "+err.Error())
+		return err
+	}
+
+	return nil
+}

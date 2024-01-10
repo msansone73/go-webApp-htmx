@@ -1,3 +1,9 @@
+<h1>Transaction List</h1>
+
+<div class="d-flex justify-content-end">
+  <button class="btn btn-success" hx-get="/transaction/form" hx-target="#content"> New</button>
+</div>
+
 <table class="table table-striped">
     <thead>
       <tr>
@@ -6,6 +12,8 @@
         <th scope="col">Valor</th>
         <th scope="col">Quantidade</th>
         <th scope="col">Data</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -17,6 +25,8 @@
             <td>{{.Value| formatCurrency}}</td>
             <td>{{.Quantity}}</td>
             <td>{{.Date | formatDate}}</td>
+            <td><button class="btn btn-primary btn-sm" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" hx-put="/transaction/{{.ID}}" hx-target="#content"> Editar</button></td>
+            <td><button class="btn btn-danger btn-sm" hx-delete="/transaction/{{.ID}}" hx-target="#content" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"> Apagar</button></td>
             <td></td>
         </tr>
         {{end}}

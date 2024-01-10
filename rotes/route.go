@@ -28,6 +28,8 @@ func SetRoutesGin(r *gin.Engine ){
 	r.PUT("/stock/:code", handles.MustLoggged, handles.PutStock)
 
 	r.GET("/transactions", handles.TransactionListHandler)
+	r.GET("/transaction/form", handles.TransactionFormHandler)
+	r.PUT("/transaction/:id", handles.TransactionFormHandler)
 
 	r.GET("/carteira", handles.CarteiraHandler)
 
