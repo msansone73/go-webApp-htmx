@@ -1,5 +1,6 @@
 <h1>Transaction Form</h1>
 <form class="needs-validation" hx-post="/transaction/form" hx-target="#content">
+    <input type="hidden" id="id" value="{{ .Transaction.ID }}">
     <div class="form-group">
         <label for="stock">Stock:</label>
         <select class="form-control" id="stock" required>
