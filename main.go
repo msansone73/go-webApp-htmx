@@ -19,7 +19,11 @@ func main() {
 
 
 	store := cookie.NewStore([]byte("secret"))
-
+	store.Options(sessions.Options{
+        MaxAge: 3600 * 1, // 1 hours
+        Path:   "/",
+        Secure: true,
+    })
     // Configurar o Gin para usar o logger padrão
     //gin.SetMode(gin.ReleaseMode)
     //gin.DefaultWriter = file
