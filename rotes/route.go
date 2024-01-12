@@ -29,7 +29,9 @@ func SetRoutesGin(r *gin.Engine ){
 
 	r.GET("/transactions", handles.TransactionListHandler)
 	r.GET("/transaction/form", handles.TransactionFormHandler)
-	r.PUT("/transaction/:id", handles.TransactionFormHandler)
+	r.GET("/transaction/:id", handles.TransactionFormHandler)
+	r.POST("/transaction/form", handles.TransactionFormHandlerPost)
+	r.DELETE("/transaction/:id", handles.TransactionDeleteHandler)
 
 	r.GET("/carteira", handles.CarteiraHandler)
 

@@ -3,7 +3,7 @@
     <input type="hidden" id="id" value="{{ .Transaction.ID }}">
     <div class="form-group">
         <label for="stock">Stock:</label>
-        <select class="form-control" id="stock" required>
+        <select class="form-control" id="stock" name="stock" required>
             <option value="">Select a stock</option>
             {{ range $stock := .Stocks }}
                 <option value="{{ $stock.Code }}"   
@@ -13,29 +13,26 @@
         </select>
     </div>
 
-
-
-
     <div class="form-group">
         <label for="type">Type:</label>
-        <select class="form-control" id="type" required>
+        <select class="form-control" id="type" name="type" required>
             <option value="B" {{if eq .Transaction.Tipo "B"}} selected {{end}} >Buy</option>
             <option value="S" {{if eq .Transaction.Tipo "S"}} selected {{end}} >Sell</option>
         </select>
     </div>
     <div class="form-group">
         <label for="value">Value:</label>
-        <input type="number" class="form-control" id="value" value ="{{ .Transaction.Value}}" required>
+        <input type="number" class="form-control" id="value" name="value" value ="{{ .Transaction.Value}}" required>
     </div>
     <div class="form-group">
         <label for="quantity">Quantity:</label>
-        <input type="number" class="form-control" id="quantity" value ="{{ .Transaction.Quantity}}" required>
+        <input type="number" class="form-control" id="quantity" name="quantity" value ="{{ .Transaction.Quantity}}" required>
     </div>
     <div class="form-group">
         <label for="date">Date:</label>
         <div class="form-group">
             <label for="date">Date:</label>
-            <input type="date" class="form-control" id="date" value="{{ .Transaction.Date.Format "2006-01-02" }}"  required>
+            <input type="date" class="form-control" id="date" name="date" value="{{ .Transaction.Date.Format "2006-01-02" }}"  required>
         </div>
     <button type="submit" class="btn btn-primary" ht>Submit</button>
 </form>

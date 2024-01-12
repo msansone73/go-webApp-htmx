@@ -20,7 +20,7 @@ func (t * Transaction) GetTransactionsByUser(user User) ([]Transaction, error) {
 	defer db.Close()
 
 
-	rows, err:= db.Query("select id, stock_code, type, value, quantity, date from transactions where user_id = $1", user.ID) 
+	rows, err:= db.Query("select id, stock_code, type, value, quantity, date from transactions where user_id = $1 order by date desc", user.ID) 
 	if err!= nil {
 		log.Println("GetTransactionsByUser - erro: "+err.Error())
 		return nil, err
@@ -75,6 +75,19 @@ func (t *Transaction) SaveTransaction() error {
 	_, err:= db.Exec("insert into transactions (user_id, stock_code, type, value, quantity, date) values ($1, $2, $3, $4, $5, $6)", t.User.ID, t.Stock.Code, t.Tipo, t.Value, t.Quantity, t.Date)
 	if err!= nil {
 		log.Println("SaveTransaction - erro: "+err.Error())
+		return err
+	}
+
+	return nil
+}
+
+func (t *Transaction) DeleteTransaction() error {
+	db:= GetConnection()
+	defer db.Close()
+
+	_, err:= db.Exec("delete from transactions where id = $1", t.ID)
+	if err!= nil {
+		log.Println("DeleteTransaction - erro: "+err.Error())
 		return err
 	}
 
