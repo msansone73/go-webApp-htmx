@@ -23,7 +23,6 @@ func MustLoggged( c *gin.Context ){
 		log.Println("MustLoggged - Usuario Nâo logado!")
 		c.Redirect( 302,"/forbidden")
 	} else {
-		log.Println("MustLoggged - Usuario logado! email = "+ email.(string))
 		c.Next()
 	}
 }

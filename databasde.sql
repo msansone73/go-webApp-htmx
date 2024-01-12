@@ -126,3 +126,5 @@ insert into stocks  (code, name, type) values ('MXRF11', 'Maxi Renda Fundo de In
 insert into transactions (user_id, stock_code, type, value, quantity, date) values (1, 'BBAS3', 'B', 30.00, 100, '2021-01-01');
 
 insert into income (user_id, stock_code, value, quantity, date) values (1, 'BBAS3', 0.50, 100, '2021-01-01');
+
+update transactions set value = 32.00 where id = 1;

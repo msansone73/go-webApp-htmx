@@ -92,20 +92,8 @@ func TransactionFormHandlerPost(c *gin.Context) {
 	log.Println("iniciando TransactionFormHandlerPost() ...")
 	transaction := new(model.Transaction)
 	transaction.ID, _ = strconv.Atoi(c.PostForm("id"))
-	transaction.Stock.Code = c.PostForm("stock")
-	transaction.Quantity, _ = strconv.Atoi(c.PostForm("quantity"))
-	transaction.Value, _ = strconv.ParseFloat(c.PostForm("value"), 64)
-	transaction.Tipo = c.PostForm("type")
-	dateStr := c.PostForm("date")
-	date, err := time.Parse("2006-01-02", dateStr)
-	if err != nil {
-		log.Println("Error parsing date:", err)
-		// Handle the error accordingly
-	}
-	transaction.Date = date
-
 	if transaction.ID != 0 {
-		//transaction.UpdateTransaction()
+		transaction.GetTransactionById(transaction.ID)
 	} else {
 		session := sessions.Default(c)
 		iemail := session.Get("user")
@@ -117,6 +105,17 @@ func TransactionFormHandlerPost(c *gin.Context) {
 		}
 		transaction.User = user
 	}
+	transaction.Stock.Code = c.PostForm("stock")
+	transaction.Quantity, _ = strconv.Atoi(c.PostForm("quantity"))
+	transaction.Value, _ = strconv.ParseFloat(c.PostForm("value"), 64)
+	transaction.Tipo = c.PostForm("type")
+	dateStr := c.PostForm("date")
+	date, err := time.Parse("2006-01-02", dateStr)
+	if err != nil {
+		log.Println("Error parsing date:", err)
+	}
+	transaction.Date = date
+
 	transaction.SaveTransaction()
 	c.Redirect(http.StatusFound, "/transactions")
 }

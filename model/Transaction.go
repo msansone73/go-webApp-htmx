@@ -72,12 +72,19 @@ func (t *Transaction) SaveTransaction() error {
 	db:= GetConnection()
 	defer db.Close()
 
-	_, err:= db.Exec("insert into transactions (user_id, stock_code, type, value, quantity, date) values ($1, $2, $3, $4, $5, $6)", t.User.ID, t.Stock.Code, t.Tipo, t.Value, t.Quantity, t.Date)
-	if err!= nil {
-		log.Println("SaveTransaction - erro: "+err.Error())
-		return err
+	if t.ID != 0 {
+		_, err:= db.Exec("update transactions set stock_code =$1, \"type\" =$2, value =$3, quantity =$4, date=$5 where id = $6;", t.Stock.Code, t.Tipo, t.Value, t.Quantity, t.Date, t.ID)
+		if err!= nil {
+			log.Println("SaveTransaction - update - erro: "+err.Error())
+			return err
+		}
+	} else {
+		_, err:= db.Exec("insert into transactions (user_id, stock_code, type, value, quantity, date) values ($1, $2, $3, $4, $5, $6)", t.User.ID, t.Stock.Code, t.Tipo, t.Value, t.Quantity, t.Date)
+		if err!= nil {
+			log.Println("SaveTransaction - insert - erro: "+err.Error())
+			return err
+		}
 	}
-
 	return nil
 }
 
