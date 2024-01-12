@@ -21,35 +21,43 @@ func init() {
 }
 
 func main() {
+	r := gin.Default()
+	setFormaters(r)
+	setSession(r)
+	rotes.SetRoutesGin(r)
+	r.LoadHTMLGlob("templates/*")
+	r.Static("/static", "./assets")
+	r.Run(":80")
+}
+
+func setFormaters(r *gin.Engine) {
+	r.SetFuncMap(template.FuncMap{
+		"formatCurrency": formatCurrency,
+		"formatDate": formatDate,
+	})
+}
+
+func setSession(r *gin.Engine) {
 	store := cookie.NewStore([]byte("secret"))
 	store.Options(sessions.Options{
         MaxAge: 3600 * 1, // 1 hours
         Path:   "/",
         Secure: true,
     })
-	r := gin.Default()
-	r.SetFuncMap(template.FuncMap{
-		"formatCurrency": formatCurrency,
-		"formatDate": formatDate,
-	})
 	r.Use(sessions.Sessions("mysession", store))
 
-	rotes.SetRoutesGin(r)
-	r.LoadHTMLGlob("templates/*")
-	r.Static("/static", "./assets")
-	
-	r.Run(":80")
 }
 
-
-
-// Set log parameter
 func setLog(){
-	f, _ := os.Create("app.log")
+	logfile := "app.log"
+	f, err := os.Create(logfile)
+	if err != nil {
+		panic(err)
+	}
 	gin.DefaultWriter = io.MultiWriter(f)
 
     log.SetFlags(log.LstdFlags | log.Lshortfile)
-    file, err := os.OpenFile("app.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+    file, err := os.OpenFile(logfile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
     if err != nil {
         log.Fatal("Falha ao abrir arquivo de log:", err)
     }
