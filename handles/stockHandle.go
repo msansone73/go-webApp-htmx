@@ -5,6 +5,9 @@ import (
 	"main/model"
 	"net/http"
 
+	"main/scrapping" // Import the package that contains the GetStockInfo function
+
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -54,4 +57,22 @@ func PutStock( c *gin.Context) {
 		log.Println("Erro ao recuperar stock", err.Error())
 	}
 	c.HTML(http.StatusOK,"stockForm.html", stock)
+}
+
+func StocksScrapping(c *gin.Context) {
+	code := c.Param("code")
+	stock := new(model.Stock)
+	stock.Code = code
+	err := stock.GetStockByCode()
+	if err != nil {
+		log.Println("Erro ao recuperar stock", err.Error())
+	}
+
+	StockInfo, _ := scrapping.GetStockInfo(stock.Code, "acoes") // Call the GetStockInfo function from the scrapping package
+
+	dividend := new(model.Dividend)
+	dividend.SaveDividend(StockInfo.Dividends)
+
+
+	c.HTML(http.StatusOK, "stockScrappingInfo.html", StockInfo)
 }

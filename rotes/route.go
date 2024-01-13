@@ -5,9 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
-
-
 func SetRoutesGin(r *gin.Engine ){
 
 	r.GET("/", handles.HomeHandlerGin)
@@ -26,6 +23,7 @@ func SetRoutesGin(r *gin.Engine ){
 	r.POST("/stock/form", handles.MustLoggged, handles.PostStocksForm)
 	r.DELETE("/stock/:code", handles.MustLoggged, handles.DeleteStock)
 	r.PUT("/stock/:code", handles.MustLoggged, handles.PutStock)
+	r.GET("/stock/scraping/:code", handles.MustLoggged, handles.StocksScrapping)
 
 	r.GET("/transactions", handles.MustLoggged, handles.TransactionListHandler)
 	r.GET("/transaction/form", handles.MustLoggged, handles.TransactionFormHandler)

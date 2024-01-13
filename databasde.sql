@@ -94,6 +94,20 @@ CREATE TABLE income (
     date TIMESTAMP not null
 );
 
+CREATE TABLE dividend (
+    id SERIAL PRIMARY KEY,
+    hash VARCHAR(255) not null,
+    stock_code VARCHAR(20) REFERENCES stocks(code),
+    dateCom TIMESTAMP not null,
+    datePag TIMESTAMP not null,
+    value DECIMAL(10, 2) not null,
+    tipo VARCHAR(50),
+    dateAtu TIMESTAMP default now()
+);
+
+
+
+
 insert into users (name, email, password) values ('Marcio Sansone', 'msansone@gmail.com', 'senha');
 
 insert into stock_types (name) values ('stock');
