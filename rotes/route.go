@@ -27,12 +27,12 @@ func SetRoutesGin(r *gin.Engine ){
 	r.DELETE("/stock/:code", handles.MustLoggged, handles.DeleteStock)
 	r.PUT("/stock/:code", handles.MustLoggged, handles.PutStock)
 
-	r.GET("/transactions", handles.TransactionListHandler)
-	r.GET("/transaction/form", handles.TransactionFormHandler)
-	r.GET("/transaction/:id", handles.TransactionFormHandler)
-	r.POST("/transaction/form", handles.TransactionFormHandlerPost)
-	r.DELETE("/transaction/:id", handles.TransactionDeleteHandler)
+	r.GET("/transactions", handles.MustLoggged, handles.TransactionListHandler)
+	r.GET("/transaction/form", handles.MustLoggged, handles.TransactionFormHandler)
+	r.GET("/transaction/:id", handles.MustLoggged, handles.TransactionFormHandler)
+	r.POST("/transaction/form", handles.MustLoggged, handles.TransactionFormHandlerPost)
+	r.DELETE("/transaction/:id", handles.MustLoggged, handles.TransactionDeleteHandler)
 
-	r.GET("/carteira", handles.CarteiraHandler)
+	r.GET("/carteira", handles.MustLoggged, handles.CarteiraHandler)
 
 }
