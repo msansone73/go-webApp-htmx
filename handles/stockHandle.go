@@ -68,7 +68,16 @@ func StocksScrapping(c *gin.Context) {
 		log.Println("Erro ao recuperar stock", err.Error())
 	}
 
-	StockInfo, _ := scrapping.GetStockInfo(stock.Code, "acoes") // Call the GetStockInfo function from the scrapping package
+
+	var tipoAcao string
+
+	if stock.Tipo == "1" {
+		tipoAcao = "acoes"
+	} else {
+		tipoAcao = "fiis"
+	}
+
+	StockInfo, _ := scrapping.GetStockInfo(stock.Code, tipoAcao) // Call the GetStockInfo function from the scrapping package
 
 	dividend := new(model.Dividend)
 	dividend.SaveDividend(StockInfo.Dividends)

@@ -43,7 +43,7 @@ func GetStockInfo(stock string, stockType string) (StockInfo, error) {
 
 	fullUrl:= fmt.Sprintf(Investidor10Url, stockType, stock)
 
-	//log.Println("Visiting: ", fullUrl)
+	log.Println("Visiting: ", fullUrl)
 
 
 	c.OnRequest(func(r *colly.Request) { 
