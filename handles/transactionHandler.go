@@ -51,6 +51,10 @@ func CarteiraHandler(c *gin.Context) {
 	email := iemail.(string)
 	var user model.User
 	err := user.GetUserByEmail(email)
+	log.Println("CarteiraHandler - user: " + user.Name)
+	log.Println("CarteiraHandler - ID: " + strconv.Itoa(user.ID))
+	log.Println("CarteiraHandler - email: " + email)
+
 	if err != nil {
 		log.Println("GetTransactions - Erro ao recuperar email - email=" + email)
 	}
