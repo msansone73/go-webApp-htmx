@@ -4,6 +4,7 @@ import (
 	"log"
 	"main/model"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -40,7 +41,15 @@ func LoginHandlerPost(c *gin.Context){
 	if err!=nil{
 		c.HTML(http.StatusOK,"login.html",nil)
 	} else {
+		session.Clear()
+		session.Options(sessions.Options{
+			MaxAge: 3600 * 1, // 1 hours
+			Path:   "/",
+			Secure: true,
+		})
 		session.Set("user",user.Email)
+		log.Println("LoginHandlerPost - user: "+user.Name)
+		log.Println("LoginHandlerPost - ID: "+strconv.Itoa(user.ID))
 		err= session.Save()
 		if err!= nil{
 			log.Println("LoginHandlerPost - impossivel gravar sessão - "+err.Error())
