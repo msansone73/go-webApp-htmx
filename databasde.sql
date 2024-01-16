@@ -109,6 +109,8 @@ CREATE TABLE dividend (
 
 
 insert into users (name, email, password) values ('Marcio Sansone', 'msansone@gmail.com', 'senha');
+insert into users (name, email, password) values ('Joao Guest', 'guest@email.com', 'senha');
+
 
 insert into stock_types (name) values ('stock');
 insert into stock_types (name) values ('fii');
