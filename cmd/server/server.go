@@ -42,7 +42,7 @@ func setSession(r *gin.Engine) {
 	store.Options(sessions.Options{
         MaxAge: 3600 * 1, // 1 hours
         Path:   "/",
-        Secure: true,
+        Secure: false,
     })
 	r.Use(sessions.Sessions("mysession", store))
 
