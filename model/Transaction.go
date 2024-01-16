@@ -2,6 +2,7 @@ package model
 
 import (
 	"log"
+	"strconv"
 	"time"
 )
 
@@ -19,6 +20,8 @@ func (t * Transaction) GetTransactionsByUser(user User) ([]Transaction, error) {
 	db:= GetConnection()
 	defer db.Close()
 
+	log.Println("GetTransactionsByUser - user: "+user.Name)
+	log.Println("GetTransactionsByUser - ID: "+ strconv.Itoa(user.ID))
 
 	rows, err:= db.Query("select id, stock_code, type, value, quantity, date from transactions where user_id = $1 order by date desc", user.ID) 
 	if err!= nil {
