@@ -19,6 +19,7 @@ func GoForbidden(c *gin.Context){
 func MustLoggged( c *gin.Context ){
 	session:= sessions.Default(c)
 	email := session.Get("user")
+	log.Println("MustLoggged - email: "+email.(string))
 	if (email==nil){
 		log.Println("MustLoggged - Usuario Nâo logado!")
 		c.Redirect( 302,"/forbidden")
