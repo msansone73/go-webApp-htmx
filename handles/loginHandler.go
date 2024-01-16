@@ -42,11 +42,6 @@ func LoginHandlerPost(c *gin.Context){
 		c.HTML(http.StatusOK,"login.html",nil)
 	} else {
 		session.Clear()
-		session.Options(sessions.Options{
-			MaxAge: 3600 * 1, // 1 hours
-			Path:   "/",
-			Secure: true,
-		})
 		session.Set("user",user.Email)
 		log.Println("LoginHandlerPost - user: "+user.Name)
 		log.Println("LoginHandlerPost - ID: "+strconv.Itoa(user.ID))
