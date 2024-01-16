@@ -41,8 +41,6 @@ func setSession(r *gin.Engine) {
 	store := cookie.NewStore([]byte("secret"))
 	store.Options(sessions.Options{
         MaxAge: 3600 * 1, // 1 hours
-        Path:   "/",
-        Secure: false,
     })
 	r.Use(sessions.Sessions("mysession", store))
 
