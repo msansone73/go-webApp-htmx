@@ -39,15 +39,9 @@ func GetStockInfo(stock string, stockType string) (StockInfo, error) {
 
 
 	c := colly.NewCollector()
-
-
 	fullUrl:= fmt.Sprintf(Investidor10Url, stockType, stock)
-
-	log.Println("Visiting: ", fullUrl)
-
-
 	c.OnRequest(func(r *colly.Request) { 
-		fmt.Println("Visiting: ", r.URL) 
+//		fmt.Println("Visiting: ", r.URL) 
 	}) 
 	 
 	c.OnError(func(_ *colly.Response, err error) { 
@@ -55,7 +49,7 @@ func GetStockInfo(stock string, stockType string) (StockInfo, error) {
 	}) 
 	 
 	c.OnResponse(func(r *colly.Response) { 
-		fmt.Println("Page visited: ", r.Request.URL) 
+//		fmt.Println("Page visited: ", r.Request.URL) 
 	}) 
 
 	c.OnHTML("div[class='_card cotacao']", func(e *colly.HTMLElement) {
@@ -72,9 +66,9 @@ func GetStockInfo(stock string, stockType string) (StockInfo, error) {
 	
 	c.OnHTML("table[id='table-dividends-history']", func(e *colly.HTMLElement) {
 		e.ForEach("tr", func(_ int, el *colly.HTMLElement) {			
-			log.Println("Dividendos: ", el.Text)
+//			log.Println("Dividendos: ", el.Text)
 			linha:= strings.Split(el.Text, "\n")
-			log.Println("Dividendos: ", linha)
+//			log.Println("Dividendos: ", linha)
 			if len(linha) > 6 {
 				dateCom, err := time.Parse("02/01/2006", linha[2])
 				if err != nil {
@@ -102,7 +96,7 @@ func GetStockInfo(stock string, stockType string) (StockInfo, error) {
 
 
 	c.OnScraped(func(r *colly.Response) { 
-		fmt.Println(r.Request.URL, " scraped!") 
+//		fmt.Println(r.Request.URL, " scraped!") 
 	})
 	
 	c.Visit(fullUrl)	
