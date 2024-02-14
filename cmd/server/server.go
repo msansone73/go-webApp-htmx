@@ -27,7 +27,7 @@ func main() {
 	rotes.SetRoutesGin(r)
 	r.LoadHTMLGlob("templates/*")
 	r.Static("/static", "./assets")
-	r.Run(":80")
+	r.Run(":8001")
 }
 
 func setFormaters(r *gin.Engine) {
