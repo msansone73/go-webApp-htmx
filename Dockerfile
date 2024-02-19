@@ -10,3 +10,7 @@ COPY . .
 RUN go build -v -o /usr/local/bin/app ./cmd/server/...
 
 CMD ["app"]
+
+# gerar a imagem e fazer push
+# docker build -t msansone/go-webapp-htmx .
+# docker push msansone/go-webapp-htmx    
