@@ -47,7 +47,7 @@ func setSession(r *gin.Engine) {
 }
 
 func setLog(){
-	logfile := "app.log"
+	logfile := "logfiles/app.log"
 	f, err := os.Create(logfile)
 	if err != nil {
 		panic(err)
